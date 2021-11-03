@@ -16,8 +16,7 @@ function Get-TimeStamp {
 
     [cmdletbinding()]
     param()
-    return "[{0:MM/dd/yy} {0:HH:mm:ss}]" -f (Get-Date)
-    
+    return "[{0:MM/dd/yy} {0:HH:mm:ss}] - " -f (Get-Date)
 }
 
 function Save-Output {
@@ -87,10 +86,10 @@ function Export-BitLockerKeyCollection {
     [CmdletBinding()]
     param (
         [string]
-        $ExportFile = "C:\TEMP\BitLockerReport.html",
+        $ExportFile = "C:\BitLockerReport.html",
 
         [string]
-        $Directory = 'C:\PSLogging',
+        $Directory = 'C:\BitLockerReports',
 
         [string]
         $File = 'ScriptExecutionLogging.txt',
@@ -100,18 +99,18 @@ function Export-BitLockerKeyCollection {
     )
     
     begin {
-        Save-Output "$(Get-TimeStamp) Starting process!"
         if (-NOT( Test-Path -Path $Directory)) {
             try {
+                $null = New-Item -Path $Directory -Type Directory -ErrorAction Stop              
                 Save-Output "$(Get-TimeStamp) Directory not found. Creating $Directory"
-                New-Item -Path $Directory -Type Directory -ErrorAction Stop
             }
             catch {
                 Save-Output "$(Get-TimeStamp) ERROR: $_.Exception"
                 return
             }
         }
-
+        Save-Output "$(Get-TimeStamp) Starting process!"
+	
         try {
             $modules = @('Az.Accounts')
             
