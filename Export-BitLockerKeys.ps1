@@ -109,7 +109,7 @@ function Export-BitLockerKeyCollection {
                 return
             }
         }
-        Save-Output "$(Get-TimeStamp) Starting process!"
+		Save-Output "$(Get-TimeStamp) Starting process!"
 	
         try {
             $modules = @('Az.Accounts')
