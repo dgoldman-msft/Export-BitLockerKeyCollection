@@ -3,13 +3,13 @@ function Get-TimeStamp {
     <#
         .SYNOPSIS
             Get a time stamp
-        
+
         .DESCRIPTION
             Get a time stamp
-        
+
         .EXAMPLE
             None
-        
+
         .NOTES
             Internal function
     #>
@@ -23,16 +23,16 @@ function Save-Output {
     <#
         .SYNOPSIS
             Save output
-        
+
         .DESCRIPTION
             Overload function for Write-Output
-        
+
         .PARAMETER InputObject
             Inbound object to be printed and saved to log
-        
+
         .EXAMPLE
             None
-        
+
         .NOTES
             None
     #>
@@ -55,7 +55,7 @@ function Export-BitLockerKeyCollection {
             Export Bitlocker keys from Azure
 
         .DESCRIPTION
-            Login to an Azure tenant and retreive the Bitlocker keys for Microsoft Endpoint devices
+            Login to an Azure tenant and retrieve the Bitlocker keys for Microsoft Endpoint devices
 
         .PARAMETER ExportFile
             HTML report with all the exported keys
@@ -69,15 +69,15 @@ function Export-BitLockerKeyCollection {
         .PARAMETER ExportToHTML
             Switch to indicating the file will be exported to HTML
 
-        .EXAMPLE 
+        .EXAMPLE
             Export-BitLockerKeyCollection
 
-            Export bitlocker keys and display them in the console
+            Export Bitlocker keys and display them in the console
 
-        .EXAMPLE 
+        .EXAMPLE
             Export-BitLockerKeyCollection -ExportToHTML
 
-            Export bitlocker keys and save them to an HTLM file
+            Export Bitlocker keys and save them to an HTLM file
 
         .NOTES
             Credit: Original code from: https://f12.hu/2020/11/11/retrieve-bitlocker-keys-stored-in-azuread-with-powershell/
@@ -97,11 +97,11 @@ function Export-BitLockerKeyCollection {
         [switch]
         $ExportToHTML
     )
-    
+
     begin {
         if (-NOT( Test-Path -Path $Directory)) {
             try {
-                $null = New-Item -Path $Directory -Type Directory -ErrorAction Stop              
+                $null = New-Item -Path $Directory -Type Directory -ErrorAction Stop
                 Save-Output "$(Get-TimeStamp) Directory not found. Creating $Directory"
             }
             catch {
@@ -109,11 +109,11 @@ function Export-BitLockerKeyCollection {
                 return
             }
         }
-		Save-Output "$(Get-TimeStamp) Starting process!"
-	
+        Save-Output "$(Get-TimeStamp) Starting process!"
+
         try {
             $modules = @('Az.Accounts')
-            
+
             foreach ($module in $modules) {
                 Save-Output "$(Get-TimeStamp) Searching for module: $($module)"
                 if (Get-Module -Name $module -ListAvailable | Where-Object Name -eq $module) {
@@ -131,7 +131,7 @@ function Export-BitLockerKeyCollection {
             return
         }
     }
-    
+
     process {
         try {
             Save-Output "$(Get-TimeStamp) Logging in to the AzureRM account"
